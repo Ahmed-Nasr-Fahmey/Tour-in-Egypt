@@ -1,0 +1,1 @@
+const { followerModel } = require("../models/follower.model");
