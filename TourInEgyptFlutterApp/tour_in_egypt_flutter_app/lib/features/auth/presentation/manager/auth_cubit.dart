@@ -22,26 +22,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LoginLoadingState());
 
     try {
-      print('before signIn <=======');
       Map<String, dynamic> data = await ApiService.signIn(
         email: BlocProvider.of<UserCubit>(context).userModel.userEmail!,
         password: BlocProvider.of<UserCubit>(context).userModel.userPassword!,
       );
-      print('after signIn <=======');
       if (data['message'] == 'Login successful') {
         BlocProvider.of<UserCubit>(context).userModel =
             UserModel.fromJson(data['user']);
-        print('login success <=======');
         BlocProvider.of<UserCubit>(context).userModel.token = data['token'];
-        print('befor get all users <=======');
         await BlocProvider.of<UserCubit>(context).getAllUsers();
-        print('befor get all posts <=======');
         await BlocProvider.of<UserCubit>(context).getAllPosts();
-        print(
-            'user model: ${BlocProvider.of<UserCubit>(context).userModel} <=======');
-        print(
-            'stories ${BlocProvider.of<UserCubit>(context).stories[0].picture} <=======');
-        print('posts ${BlocProvider.of<UserCubit>(context).posts} <=======');
         emit(LoginSuccessState());
       } else if (data['message'] == 'Email not found') {
         emit(LoginFaliureState(erorrMessage: 'Email not found.'));
