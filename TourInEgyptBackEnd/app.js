@@ -35,8 +35,8 @@ app.use('/emergency',require('./apis/emergency.api'));
 
 // Start the server
 let server = app.listen(port, () => {
-    console.log(`Example app listening on port ${port}!`);
+    console.log(`Example app listening on port ${port}!`)
 });
 
 
-app.get('/', (req, res) => res.send('Welcome to our Tour in Egypt App!'));
+app.get('/', (req, res) => res.send('Welcome to our Tour in Egypt App!'))
