@@ -1,0 +1,1 @@
+const { eventModel } = require("../models/event.model");

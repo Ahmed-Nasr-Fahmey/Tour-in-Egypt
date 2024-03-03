@@ -1,0 +1,1 @@
+const { emergencyModel } = require("../models/emergency.model");

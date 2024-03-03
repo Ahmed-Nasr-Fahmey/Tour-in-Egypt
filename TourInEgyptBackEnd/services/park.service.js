@@ -1,0 +1,1 @@
+const { parkModel } = require("../models/park.model");

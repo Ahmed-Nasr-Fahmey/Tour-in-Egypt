@@ -1,0 +1,1 @@
+const { shoppingModel } = require("../models/shopping.model");

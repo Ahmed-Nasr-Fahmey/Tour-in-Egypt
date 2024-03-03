@@ -1,0 +1,1 @@
+const { tourismModel } = require("../models/tourism.model");

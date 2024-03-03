@@ -3,8 +3,6 @@ const app = express()
 require('dotenv').config()
 const port = process.env.PORT;
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 
 app.use(express.json());
@@ -24,19 +22,21 @@ app.use('/posts',require('./apis/post.api'));
 app.use('/postComments',require('./apis/post.comment.api'));
 app.use('/followers',require('./apis/follower.api'));
 app.use('/following',require('./apis/following.api'));
+app.use('/cities',require('./apis/city.api'));
+app.use('/restaurants',require('./apis/restaurant.api'));
+app.use('/cafes',require('./apis/cafe.api'));
+app.use('/tourism',require('./apis/tourism.api'));
+app.use('/beaches',require('./apis/beache.api'));
+app.use('/shopping',require('./apis/shopping.api'));
+app.use('/parks',require('./apis/park.api'));
+app.use('/events',require('./apis/event.api'));
+app.use('/emergency',require('./apis/emergency.api'));
+
 
 // Start the server
 let server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}!`)
 });
-
-let io = require("socket.io")(server);
-
-
-io.on("connection",async (client) => {
-    console.log('new Client Connected');
-});
-
 
 
 app.get('/', (req, res) => res.send('Hello World!'))

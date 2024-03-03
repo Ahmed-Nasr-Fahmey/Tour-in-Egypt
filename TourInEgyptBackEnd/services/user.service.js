@@ -41,7 +41,7 @@ module.exports.signIn = async (request,response) =>{
                 },
                 process.env.TOKENSECRITKEY,
                 );
-                response.json({ message: "Login successful", token });
+                response.json({ message: "Login successful", token , user});
             } else {
                 response.status(401).json({ message: "Wrong password" });
             }
@@ -55,8 +55,8 @@ module.exports.signIn = async (request,response) =>{
 
 module.exports.sendConfirmationCode = async (request, response) => {
     try {
-
-        const user = await userModel.findOne({ _id: request._id });
+        const { email } = request.body;
+        const user = await userModel.findOne({email});
 
         if (!user) {
             return response.status(404).json({ message: "User not found" });
@@ -105,9 +105,9 @@ module.exports.sendConfirmationCode = async (request, response) => {
 
 module.exports.verifyConfirmationCode = async (request, response) => {
     try {
-        const { confirmationCode } = request.body;
+        const { email, confirmationCode } = request.body;
 
-        const user = await userModel.findOne({ _id: request._id });
+        const user = await userModel.findOne({ email });
 
         if (!user) {
             return response.status(404).json({ message: "User not found" });
@@ -177,9 +177,9 @@ module.exports.updateEmail = async (request, response) => {
 
 module.exports.updatePassword = async (request, response) => {
     try {
-        const { newPassword } = request.body;
+        const { email, newPassword } = request.body;
 
-        const user = await userModel.findOne({ _id: request._id });
+        const user = await userModel.findOne({ email });
 
         if (!user) {
             return response.status(404).json({ message: "User not found" });
@@ -230,5 +230,17 @@ async function deleteOldPicture(fileName) {
         }
     } catch (error) {
         console.error('Error deleting old picture:', error);
+    }
+}
+
+module.exports.getAllUsers = async (request, response) => {
+    try {
+        // Find all users in the database, excluding password, admin, and confirmationCode
+        const users = await userModel.find({}, { password: 0, admin: 0, confirmationCode: 0 });
+
+        response.status(200).json({ message: 'Successfully fetched all users', users });
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ message: 'Internal Server Error' });
     }
 }

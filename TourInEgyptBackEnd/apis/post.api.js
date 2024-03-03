@@ -1,4 +1,6 @@
-const {  } = require('../services/post.service')
+const { uploads } = require('../common/uploads');
+const { auth } = require('../middleware/authentication/auth');
+const { createPost, getAllPosts } = require('../services/post.service')
 
 const router = require('express').Router();
 // GET = RETRIVE
@@ -6,8 +8,8 @@ const router = require('express').Router();
 // PUT = UPDATE
 // DELETE = REMOVE
 
-// router.post('/signUp', signUp);
+router.get('/getAllPosts', auth, getAllPosts);
 
-// router.get('/getUsers', auth, getUsers);
+router.post('/createPost', auth, uploads('file'), createPost);
 
 module.exports = router;

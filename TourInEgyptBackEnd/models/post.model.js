@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const postSchema = mongoose.Schema({
     contentPath: String,
     contentType: String,
+    placeName: String,
     description: String,
+    hashtags: String,
     location: String,
     longtude: String,
     latitude: String,
