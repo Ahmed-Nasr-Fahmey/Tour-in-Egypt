@@ -3,8 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static String baseUrl = 'http://10.0.2.2:3000/';
-  static String imagesBaseUrl = 'http://192.168.1.5:3000/'; // Nasr
+  // localhost
+  // static String baseUrl = 'http://10.0.2.2:3000/';
+  // static String imagesBaseUrl = 'http://192.168.1.5:3000/';
+
+  // Depoly
+  static String baseUrl = 'https://clean-gray-springbok.cyclic.app/';
+  static String imagesBaseUrl = 'https://clean-gray-springbok.cyclic.app/';
 
   static Future<Map<String, dynamic>> signIn(
       {required String email, required String password}) async {
@@ -67,10 +72,7 @@ class ApiService {
       headers: {
         "Content-Type": "application/json",
       },
-      body: jsonEncode({
-        "email": email,
-        "confirmationCode": confirmationCode
-      }),
+      body: jsonEncode({"email": email, "confirmationCode": confirmationCode}),
     );
     Map<String, dynamic> data = jsonDecode(response.body);
     return data;
@@ -84,10 +86,7 @@ class ApiService {
       headers: {
         "Content-Type": "application/json",
       },
-      body: jsonEncode({
-        "email": email,
-        "newPassword": newPassword
-      }),
+      body: jsonEncode({"email": email, "newPassword": newPassword}),
     );
     Map<String, dynamic> data = jsonDecode(response.body);
     return data;
@@ -105,6 +104,7 @@ class ApiService {
     Map<String, dynamic> data = jsonDecode(response.body);
     return data;
   }
+
   static Future<Map<String, dynamic>> getAllPosts(
       {required String token}) async {
     Uri url = Uri.parse('${baseUrl}posts/getAllPosts');
