@@ -39,4 +39,4 @@ let server = app.listen(port, () => {
 });
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Welcome to our Tour in Egypt App!'))
