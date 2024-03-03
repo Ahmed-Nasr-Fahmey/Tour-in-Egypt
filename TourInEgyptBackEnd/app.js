@@ -39,4 +39,4 @@ let server = app.listen(port, () => {
 });
 
 
-app.get('/', (req, res) => res.send('Welcome to our Tour in Egypt App!'))
+app.get('/', (req, res) => res.send('Welcome to our Tour in Egypt App!'));
