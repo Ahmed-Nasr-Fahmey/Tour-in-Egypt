@@ -5,10 +5,13 @@ const tourismSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'cities', // Reference to the 'cities' model
     },
+    name:String,
     description: String,
     location: String,
+    address:String,
     longtude: String,
     latitude: String,
+    picture:String,
     rate: {
         type: Number,
         default: 0,

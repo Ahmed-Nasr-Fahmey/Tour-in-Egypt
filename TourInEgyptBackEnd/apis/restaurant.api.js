@@ -1,4 +1,4 @@
-const {  } = require('../services/restaurant.service')
+const { addRestaurants } = require('../services/restaurant.service')
 
 const router = require('express').Router();
 // GET = RETRIVE
@@ -6,8 +6,7 @@ const router = require('express').Router();
 // PUT = UPDATE
 // DELETE = REMOVE
 
-// router.post('/signUp', signUp);
 
-// router.get('/getUsers', auth, getUsers);
+router.post('/addRestaurants',  addRestaurants);
 
 module.exports = router;

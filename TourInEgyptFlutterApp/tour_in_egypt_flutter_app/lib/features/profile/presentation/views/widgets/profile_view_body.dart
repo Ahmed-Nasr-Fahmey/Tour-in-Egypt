@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,38 +29,48 @@ class ProfileViewBody extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: ConstColors.primaryGoldColor,
-                      radius: 40,
+                    GestureDetector(
+                      onTap: () {
+                        PersistentNavBarNavigator
+                            .pushNewScreenWithRouteSettings(
+                          context,
+                          settings:
+                              const RouteSettings(name: ImageView.routeName),
+                          screen: ImageView(
+                            imageUrl: BlocProvider.of<UserCubit>(context)
+                                .userModel
+                                .picture!,
+                          ),
+                          withNavBar: false,
+                          pageTransitionAnimation: PageTransitionAnimation.fade,
+                        );
+                      },
                       child: CircleAvatar(
-                        radius: 37,
-                        // child: Image.network(
-                        //   ApiService.imagesBaseUrl +
-                        //       BlocProvider.of<UserCubit>(context)
-                        //           .userModel
-                        //           .picture!,
-                        //   fit: BoxFit.cover,
-                        // ),
-                        child: GestureDetector(
-                          onTap: () {
-                            PersistentNavBarNavigator
-                                .pushNewScreenWithRouteSettings(
-                              context,
-                              settings: const RouteSettings(
-                                  name: ImageView.routeName),
-                              screen: ImageView(
-                                  imageUrl: ConstLists
-                                      .categoriesList[0].categoryImageUrl),
-                              withNavBar: false,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.fade,
-                            );
-                          },
+                        backgroundColor: ConstColors.primaryGoldColor,
+                        radius: 40,
+                        child: CircleAvatar(
+                          radius: 37,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.asset(
-                              ConstLists.categoriesList[0].categoryImageUrl,
-                              fit: BoxFit.cover,
+                            borderRadius: BorderRadiusDirectional.circular(50),
+                            child: CachedNetworkImage(
+                              imageUrl: ApiService.imagesBaseUrl +
+                                  BlocProvider.of<UserCubit>(context)
+                                      .userModel
+                                      .picture!,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              placeholder: (context, url) => const SizedBox(),
+                              errorWidget: (context, url, error) => const Icon(
+                                Icons.error,
+                                color: ConstColors.primaryGoldColor,
+                              ),
                             ),
                           ),
                         ),
@@ -69,8 +80,7 @@ class ProfileViewBody extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      // BlocProvider.of<UserCubit>(context).userModel.userName!,
-                      ConstLists.categoriesList[0].categoryName,
+                      BlocProvider.of<UserCubit>(context).userModel.userName!,
                       style: GoogleFonts.roboto(
                         color: ConstColors.primaryBlueColor,
                         fontSize: 14,
@@ -237,8 +247,8 @@ class ProfileViewBody extends StatelessWidget {
               'Postes',
               style: GoogleFonts.roboto(
                 color: ConstColors.primaryBlueColor,
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

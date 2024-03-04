@@ -46,51 +46,65 @@ class _PostCardState extends State<PostCard> {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
               child: Row(
                 children: [
-                  Stack(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: ConstColors.primaryGoldColor,
-                        radius: 27,
-                        child: CircleAvatar(
-                          radius: 25,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: CachedNetworkImage(
-                              imageUrl: ApiService.imagesBaseUrl +
-                                  widget.postModel.userModel!.picture!,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
+                  GestureDetector(
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+                        context,
+                        settings:
+                            const RouteSettings(name: ImageView.routeName),
+                        screen: ImageView(
+                            imageUrl: widget.postModel.userModel!.picture!),
+                        withNavBar: false,
+                        pageTransitionAnimation: PageTransitionAnimation.fade,
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: ConstColors.primaryGoldColor,
+                          radius: 27,
+                          child: CircleAvatar(
+                            radius: 25,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: CachedNetworkImage(
+                                imageUrl: ApiService.imagesBaseUrl +
+                                    widget.postModel.userModel!.picture!,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              placeholder: (context, url) => const SizedBox(),
-                              errorWidget: (context, url, error) => const Icon(
-                                Icons.error,
-                                color: ConstColors.primaryGoldColor,
+                                placeholder: (context, url) => const SizedBox(),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(
+                                  Icons.error,
+                                  color: ConstColors.primaryGoldColor,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          width: 15,
-                          height: 15,
-                          color: ConstColors.backgroundLightMode,
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            width: 15,
+                            height: 15,
+                            color: ConstColors.backgroundLightMode,
+                          ),
                         ),
-                      ),
-                      const Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: ConstIcons.solidCorrectIcon,
-                      ),
-                    ],
+                        const Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: ConstIcons.solidCorrectIcon,
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     width: 10,

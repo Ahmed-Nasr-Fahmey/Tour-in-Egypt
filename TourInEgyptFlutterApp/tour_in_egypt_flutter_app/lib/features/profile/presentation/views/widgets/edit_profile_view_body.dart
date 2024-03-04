@@ -1,9 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/functions/unfocus_textfield.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/functions/validation.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_button.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_profile_text_form_field.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/image_view.dart';
@@ -50,8 +54,10 @@ class EditProfileViewBody extends StatelessWidget {
                           settings:
                               const RouteSettings(name: ImageView.routeName),
                           screen: ImageView(
-                              imageUrl: ConstLists
-                                  .categoriesList[0].categoryImageUrl),
+                            imageUrl: BlocProvider.of<UserCubit>(context)
+                                .userModel
+                                .picture!,
+                          ),
                           withNavBar: false,
                           pageTransitionAnimation: PageTransitionAnimation.fade,
                         );
@@ -61,8 +67,29 @@ class EditProfileViewBody extends StatelessWidget {
                         radius: 65,
                         child: CircleAvatar(
                           radius: 62,
-                          backgroundImage: AssetImage(
-                              ConstLists.categoriesList[0].categoryImageUrl),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(80),
+                            child: CachedNetworkImage(
+                              imageUrl: ApiService.imagesBaseUrl +
+                                  BlocProvider.of<UserCubit>(context)
+                                      .userModel
+                                      .picture!,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              placeholder: (context, url) => const SizedBox(),
+                              errorWidget: (context, url, error) => const Icon(
+                                Icons.error,
+                                color: ConstColors.primaryGoldColor,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -124,7 +151,7 @@ class EditProfileViewBody extends StatelessWidget {
                 child: Text(
                   "Name ",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: ConstColors.primaryBlueColor,
                   ),
@@ -158,7 +185,7 @@ class EditProfileViewBody extends StatelessWidget {
                 child: Text(
                   "E-maill ",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: ConstColors.primaryBlueColor,
                   ),
@@ -191,7 +218,7 @@ class EditProfileViewBody extends StatelessWidget {
                 child: Text(
                   "Password ",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: ConstColors.primaryBlueColor,
                   ),
