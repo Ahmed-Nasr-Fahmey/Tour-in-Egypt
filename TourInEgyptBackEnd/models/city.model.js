@@ -5,7 +5,6 @@ const citySchema = mongoose.Schema({
     region: String,
     famousPlaceName: String,
     famousPlacePath: String,
-    confirmationCode: String,
 });
 
 const cityModel = mongoose.model('cities', citySchema);

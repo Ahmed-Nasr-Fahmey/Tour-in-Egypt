@@ -5,6 +5,7 @@ import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/display_filter_provider.dart';
 import 'package:tour_in_egypt_flutter_app/features/auth/presentation/views/splash_view.dart';
+import 'package:tour_in_egypt_flutter_app/features/profile/presentation/views/profile_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,8 @@ class TourinEgypt extends StatelessWidget {
       create: (context) => DisplayCategoryProvider(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashView(),
+        // home: SplashView(),
+        home: ProfileView(),
         // initialRoute: CustomBottomNavigationBar.routeName,
         // onGenerateRoute: Routes.generateRoute,
       ),

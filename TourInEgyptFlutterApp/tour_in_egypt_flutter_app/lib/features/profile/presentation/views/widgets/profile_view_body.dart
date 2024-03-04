@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_button.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_see_all_row.dart';
+import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/image_view.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/post_card_builder.dart';
 import 'package:tour_in_egypt_flutter_app/features/profile/presentation/views/widgets/profile_screen_reels_card_builder.dart';
 
@@ -23,20 +28,49 @@ class ProfileViewBody extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       backgroundColor: ConstColors.primaryGoldColor,
                       radius: 40,
                       child: CircleAvatar(
                         radius: 37,
-                        backgroundImage: NetworkImage(
-                            'https://scontent.fcai22-1.fna.fbcdn.net/v/t39.30808-6/351356037_1121650665225980_8313024570362431221_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=vOtHKxB4rvkAX9tQazj&_nc_ht=scontent.fcai22-1.fna&oh=00_AfBihVz0RLw4x3MjqyLlLwh71w5bFMW67-UNWMUZgx6vkg&oe=653CA16A'),
+                        // child: Image.network(
+                        //   ApiService.imagesBaseUrl +
+                        //       BlocProvider.of<UserCubit>(context)
+                        //           .userModel
+                        //           .picture!,
+                        //   fit: BoxFit.cover,
+                        // ),
+                        child: GestureDetector(
+                          onTap: () {
+                            PersistentNavBarNavigator
+                                .pushNewScreenWithRouteSettings(
+                              context,
+                              settings: const RouteSettings(
+                                  name: ImageView.routeName),
+                              screen: ImageView(
+                                  imageUrl: ConstLists
+                                      .categoriesList[0].categoryImageUrl),
+                              withNavBar: false,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade,
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              ConstLists.categoriesList[0].categoryImageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      'Ahmed Nasr',
+                      // BlocProvider.of<UserCubit>(context).userModel.userName!,
+                      ConstLists.categoriesList[0].categoryName,
                       style: GoogleFonts.roboto(
                         color: ConstColors.primaryBlueColor,
                         fontSize: 14,

@@ -1,4 +1,4 @@
-const {  } = require('../services/city.service')
+const { addCities } = require('../services/city.service')
 
 const router = require('express').Router();
 // GET = RETRIVE
@@ -6,8 +6,6 @@ const router = require('express').Router();
 // PUT = UPDATE
 // DELETE = REMOVE
 
-// router.post('/signUp', signUp);
-
-// router.get('/getUsers', auth, getUsers);
+router.post('/addCities', addCities);
 
 module.exports = router;

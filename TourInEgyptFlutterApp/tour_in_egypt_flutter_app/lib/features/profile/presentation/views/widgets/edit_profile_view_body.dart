@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/functions/unfocus_textfield.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/functions/validation.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_button.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_profile_text_form_field.dart';
+import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/image_view.dart';
 
 class EditProfileViewBody extends StatelessWidget {
   const EditProfileViewBody({
@@ -40,13 +42,28 @@ class EditProfileViewBody extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircleAvatar(
-                      backgroundColor: ConstColors.primaryGoldColor,
-                      radius: 65,
+                    GestureDetector(
+                      onTap: () {
+                        PersistentNavBarNavigator
+                            .pushNewScreenWithRouteSettings(
+                          context,
+                          settings:
+                              const RouteSettings(name: ImageView.routeName),
+                          screen: ImageView(
+                              imageUrl: ConstLists
+                                  .categoriesList[0].categoryImageUrl),
+                          withNavBar: false,
+                          pageTransitionAnimation: PageTransitionAnimation.fade,
+                        );
+                      },
                       child: CircleAvatar(
-                        radius: 62,
-                        backgroundImage:
-                            AssetImage("assets/onboardImages/photo.jpeg"),
+                        backgroundColor: ConstColors.primaryGoldColor,
+                        radius: 65,
+                        child: CircleAvatar(
+                          radius: 62,
+                          backgroundImage: AssetImage(
+                              ConstLists.categoriesList[0].categoryImageUrl),
+                        ),
                       ),
                     ),
                     const Spacer(),
