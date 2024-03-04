@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
+
 class CommentCard extends StatelessWidget {
   const CommentCard({
     super.key,
@@ -32,13 +37,40 @@ class CommentCard extends StatelessWidget {
                 children: [
                   Stack(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         backgroundColor: ConstColors.primaryGoldColor,
-                        radius: 28,
+                        radius: 27,
                         child: CircleAvatar(
                           radius: 25,
-                          backgroundImage: NetworkImage(
-                              'https://scontent.fcai22-1.fna.fbcdn.net/v/t39.30808-6/351356037_1121650665225980_8313024570362431221_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=EPUGsdMetM4AX9b3pxB&_nc_ht=scontent.fcai22-1.fna&oh=00_AfDGDDyagVT_dTsBt6OjSG36tJdKYijhdbMo5Uvkp2IUgw&oe=6536B2AA'),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: CachedNetworkImage(
+                              imageUrl: ApiService.imagesBaseUrl +
+                                  BlocProvider.of<UserCubit>(context)
+                                      .userModel
+                                      .picture!,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              placeholder: (context, url) => const SizedBox(),
+                              errorWidget: (context, url, error) => const Icon(
+                                Icons.error,
+                                color: ConstColors.primaryGoldColor,
+                              ),
+                            ),
+                          ),
+                          // backgroundImage: NetworkImage(
+                          //   ApiService.imagesBaseUrl +
+                          //       BlocProvider.of<UserCubit>(context)
+                          //           .userModel
+                          //           .picture!,
+                          // ),
                         ),
                       ),
                       Positioned(
@@ -114,7 +146,7 @@ class CommentCard extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'Share',
+                        'Reply',
                         style: GoogleFonts.roboto(
                           color: ConstColors.primaryBlueColor,
                           fontSize: 10,

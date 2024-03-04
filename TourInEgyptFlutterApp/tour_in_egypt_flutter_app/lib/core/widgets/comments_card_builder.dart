@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/comment_card.dart';
 
@@ -10,7 +9,7 @@ class CommentsCardBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 230,
+      height: MediaQuery.of(context).size.height * 0.75,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: 6,

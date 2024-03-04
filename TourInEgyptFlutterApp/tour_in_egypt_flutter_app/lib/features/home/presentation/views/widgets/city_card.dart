@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
@@ -28,11 +29,27 @@ class CityCard extends StatelessWidget {
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
-              child: Image.network(
-                ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
+              // child: Image.network(
+              //   ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
+              //   fit: BoxFit.cover,
+              //   width: double.infinity,
+              //   height: double.infinity,
+              // ),
+              child: CachedNetworkImage(
+                imageUrl: ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => const SizedBox(),
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.error,
+                  color: ConstColors.primaryGoldColor,
+                ),
               ),
             ),
             Container(

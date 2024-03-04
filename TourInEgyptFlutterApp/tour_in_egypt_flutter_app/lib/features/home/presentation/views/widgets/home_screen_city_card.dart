@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -34,11 +35,28 @@ class HomeScreenCityCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                child: Image.network(
-                 ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
+                // child: Image.network(
+                //  ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
+                //   fit: BoxFit.cover,
+                //   width: double.infinity,
+                //   height: double.infinity,
+                // ),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  placeholder: (context, url) => const SizedBox(),
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                    color: ConstColors.primaryGoldColor,
+                  ),
                 ),
               ),
               Container(

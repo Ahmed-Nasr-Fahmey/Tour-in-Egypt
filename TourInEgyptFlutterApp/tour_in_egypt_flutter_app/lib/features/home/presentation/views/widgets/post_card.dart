@@ -6,6 +6,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/post_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
+import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/comments_view.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/image_view.dart';
 
 class PostCard extends StatefulWidget {
@@ -156,31 +157,31 @@ class _PostCardState extends State<PostCard> {
                       ),
                       child: SizedBox(
                         width: double.infinity,
-                        // height: MediaQuery.of(context).size.height * 0.5,
-                        child: Image.network(
-                          ApiService.imagesBaseUrl +
-                              widget.postModel.contentPath!,
-                          fit: BoxFit.cover,
-                        ),
-                        // child: CachedNetworkImage(
-                        // imageUrl: ApiService.imagesBaseUrl +
-                        //     widget.postModel.contentPath!,
-                        //   // imageUrl:
-                        //   //     'https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg',
-                        //   imageBuilder: (context, imageProvider) => Container(
-                        //     decoration: BoxDecoration(
-                        //       image: DecorationImage(
-                        //         image: imageProvider,
-                        //         fit: BoxFit.cover,
-                        //       ),
-                        //     ),
-                        //   ),
-                        //   placeholder: (context, url) => const SizedBox(),
-                        //   errorWidget: (context, url, error) => const Icon(
-                        //     Icons.error,
-                        //     color: ConstColors.primaryGoldColor,
-                        //   ),
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        // child: Image.network(
+                        //   ApiService.imagesBaseUrl +
+                        //       widget.postModel.contentPath!,
+                        //   fit: BoxFit.cover,
                         // ),
+                        child: CachedNetworkImage(
+                          imageUrl: ApiService.imagesBaseUrl +
+                              widget.postModel.contentPath!,
+                          // imageUrl:
+                          //     'https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg',
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          placeholder: (context, url) => const SizedBox(),
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.error,
+                            color: ConstColors.primaryGoldColor,
+                          ),
+                        ),
                       ),
                     ),
                   )
@@ -309,7 +310,17 @@ class _PostCardState extends State<PostCard> {
                     width: 25,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+                        context,
+                        settings:
+                            const RouteSettings(name: CommentsView.routeName),
+                        screen: const CommentsView(),
+                        withNavBar: false,
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.slideUp,
+                      );
+                    },
                     child: Column(
                       children: [
                         ConstIcons.solidCommentIcon,

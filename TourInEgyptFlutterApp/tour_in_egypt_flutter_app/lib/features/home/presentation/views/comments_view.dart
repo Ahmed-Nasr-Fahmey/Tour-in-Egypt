@@ -4,6 +4,7 @@ import 'package:tour_in_egypt_flutter_app/core/utils/functions/unfocus_textfield
 import 'package:tour_in_egypt_flutter_app/core/widgets/comments_card_builder.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_profile_text_form_field.dart';
+
 class CommentsView extends StatelessWidget {
   const CommentsView({super.key});
   static const String routeName = 'CommentsView';
@@ -25,7 +26,7 @@ class CommentsView extends StatelessWidget {
             children: [
               const CommentsCardBuilder(),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

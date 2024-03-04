@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
@@ -36,12 +37,28 @@ class CatigoryCard extends StatelessWidget {
                         width: double.infinity,
                         height: double.infinity,
                       )
-                    : Image.network(
-                        categoryModel.categoryImageUrl,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
+                    : CachedNetworkImage(
+                        imageUrl: categoryModel.categoryImageUrl,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) => const SizedBox(),
+                        errorWidget: (context, url, error) => const Icon(
+                          Icons.error,
+                          color: ConstColors.primaryGoldColor,
+                        ),
                       ),
+                // Image.network(
+                //     categoryModel.categoryImageUrl,
+                //     fit: BoxFit.cover,
+                //     width: double.infinity,
+                //     height: double.infinity,
+                //   ),
               ),
               Container(
                 decoration: BoxDecoration(
