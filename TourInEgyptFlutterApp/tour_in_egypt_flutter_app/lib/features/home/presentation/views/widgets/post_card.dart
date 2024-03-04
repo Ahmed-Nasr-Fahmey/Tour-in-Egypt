@@ -243,8 +243,6 @@ class _PostCardState extends State<PostCard> {
                   GestureDetector(
                     onTap: () {
                       //show popup menu that have location detailes
-                      print(widget.postModel.contentType);
-                      print(widget.postModel.contentPath);
                     },
                     child: Column(
                       children: [

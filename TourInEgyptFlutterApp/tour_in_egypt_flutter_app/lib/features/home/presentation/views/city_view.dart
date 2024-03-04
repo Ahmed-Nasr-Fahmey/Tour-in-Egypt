@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_see_all_row.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/categoris_card_builder.dart';
@@ -8,15 +9,16 @@ import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widge
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/city_places_builder.dart';
 
 class CityView extends StatelessWidget {
-  const CityView({super.key});
+  const CityView({super.key, required this.cityModel});
   static const String routeName = 'CityName';
+  final CityModel cityModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
         child: CustomMainAppBar(
-          title: 'Cairo',
+          title: cityModel.cityName,
           hasBackgroundColor: true,
           hasBackIcon: true,
         ),
@@ -24,12 +26,15 @@ class CityView extends StatelessWidget {
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          const SliverToBoxAdapter(child: CityCard()),
+          SliverToBoxAdapter(
+              child: CityCard(
+            cityModel: cityModel,
+          )),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: Text(
-                'Discover Cairo',
+                'Discover ${cityModel.cityName}',
                 style: GoogleFonts.roboto(
                   color: ConstColors.primaryBlueColor,
                   fontSize: 18,

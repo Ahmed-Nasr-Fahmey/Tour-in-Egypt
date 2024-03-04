@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
 
 class CityCard extends StatelessWidget {
-  const CityCard({super.key});
-
+  const CityCard({super.key, required this.cityModel});
+  final CityModel cityModel;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,7 +29,7 @@ class CityCard extends StatelessWidget {
                 bottomRight: Radius.circular(30),
               ),
               child: Image.network(
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/%D9%82%D9%84%D8%B9%D9%87_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_23.jpg/1200px-%D9%82%D9%84%D8%B9%D9%87_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_23.jpg',
+                ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
@@ -60,7 +62,7 @@ class CityCard extends StatelessWidget {
                     width: 8,
                   ),
                   Text(
-                    'Cairo',
+                    cityModel.cityName!,
                     style: GoogleFonts.roboto(
                       color: ConstColors.backgroundLightMode,
                       fontSize: 26,
@@ -75,7 +77,7 @@ class CityCard extends StatelessWidget {
               bottom: 30,
               left: 16,
               child: Text(
-                'Salah al-den’s castle',
+                cityModel.famousPlaceName!,
                 style: GoogleFonts.roboto(
                   color: ConstColors.backgroundLightMode,
                   fontSize: 12,

@@ -19,12 +19,14 @@ class HomeScreenCityCardBuilder extends StatelessWidget {
         itemCount: cities.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const Padding(
-            padding: EdgeInsets.only(
+          return Padding(
+            padding: const EdgeInsets.only(
               bottom: 16,
               left: 16,
             ),
-            child: HomeScreenCityCard(),
+            child: HomeScreenCityCard(
+              cityModel: cities[index],
+            ),
           );
         },
       ),

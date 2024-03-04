@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/city_view.dart';
 
 class HomeScreenCityCard extends StatelessWidget {
   const HomeScreenCityCard({
     super.key,
+    required this.cityModel,
   });
-
+  final CityModel cityModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
         context,
         settings: const RouteSettings(name: CityView.routeName),
-        screen: const CityView(),
+        screen: CityView(cityModel: cityModel),
         withNavBar: false,
         pageTransitionAnimation: PageTransitionAnimation.cupertino,
       ),
@@ -32,7 +35,7 @@ class HomeScreenCityCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: Image.network(
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/%D9%82%D9%84%D8%B9%D9%87_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_23.jpg/1200px-%D9%82%D9%84%D8%B9%D9%87_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_23.jpg',
+                 ApiService.imagesBaseUrl + cityModel.famousPlacePath!,
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
@@ -64,7 +67,7 @@ class HomeScreenCityCard extends StatelessWidget {
                           width: 8,
                         ),
                         Text(
-                          'Cairo',
+                          cityModel.cityName!,
                           style: GoogleFonts.roboto(
                             color: ConstColors.backgroundLightMode,
                             fontSize: 16,
@@ -83,7 +86,7 @@ class HomeScreenCityCard extends StatelessWidget {
                         Positioned(
                           bottom: 8,
                           child: Text(
-                            'Salah al-den’s castle',
+                            cityModel.famousPlaceName!,
                             style: GoogleFonts.roboto(
                               color: ConstColors.backgroundLightMode,
                               fontSize: 10,

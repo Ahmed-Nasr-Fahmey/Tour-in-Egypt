@@ -50,6 +50,7 @@ class UserCubit extends Cubit<UserState> {
         for (var post in data['posts']) {
           tempPosts.add(PostModel.fromJson(post));
         }
+        tempPosts.shuffle();
         posts = tempPosts;
         emit(PostsSuccessState());
       } else if (data['message'] == 'Internal Server Error') {
@@ -70,7 +71,6 @@ class UserCubit extends Cubit<UserState> {
       if (data['message'] == 'Cities retrieved successfully') {
         List<CityModel> tempCities = [];
         for (var city in data['cities']) {
-          print('City ======> $city');
           tempCities.add(CityModel.fromJson(city));
         }
         cities = tempCities;
