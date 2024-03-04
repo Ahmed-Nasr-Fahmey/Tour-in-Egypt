@@ -12,6 +12,16 @@ module.exports.addCities = async (req, res) => {
       res.status(201).json({ message: 'Cities added successfully', cities: insertedCities });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
+
+  module.exports.getCities = async (req, res) => {
+    try {
+      const cities = await cityModel.find({});
+      res.status(200).json({ message: 'Cities retrieved successfully', cities });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
     }
   }

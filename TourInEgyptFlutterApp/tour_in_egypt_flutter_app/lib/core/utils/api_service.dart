@@ -117,4 +117,17 @@ class ApiService {
     Map<String, dynamic> data = jsonDecode(response.body);
     return data;
   }
+
+  static Future<Map<String, dynamic>> getCities(
+      {required String token}) async {
+    Uri url = Uri.parse('${baseUrl}cities/getCities');
+    http.Response response = await http.get(
+      url,
+      headers: {
+        "token": token,
+      },
+    );
+    Map<String, dynamic> data = jsonDecode(response.body);
+    return data;
+  }
 }

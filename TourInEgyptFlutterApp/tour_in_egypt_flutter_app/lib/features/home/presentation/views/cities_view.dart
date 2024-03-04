@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/home_screen_city_card_builder.dart';
 
@@ -35,8 +37,13 @@ class CitiesView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context)
+                  .cities
+                  .where((city) => city.region == 'The great cairo')
+                  .toList(),
+            ),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -51,8 +58,13 @@ class CitiesView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context)
+                  .cities
+                  .where((city) => city.region == 'Alexandria')
+                  .toList(),
+            ),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -67,8 +79,13 @@ class CitiesView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context)
+                  .cities
+                  .where((city) => city.region == 'Delta')
+                  .toList(),
+            ),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -83,8 +100,13 @@ class CitiesView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context)
+                  .cities
+                  .where((city) => city.region == 'Canal')
+                  .toList(),
+            ),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -99,8 +121,13 @@ class CitiesView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context)
+                  .cities
+                  .where((city) => city.region == 'North upper Egypt')
+                  .toList(),
+            ),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -115,8 +142,13 @@ class CitiesView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context)
+                  .cities
+                  .where((city) => city.region == 'Middle of Upper Egypt')
+                  .toList(),
+            ),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -131,8 +163,13 @@ class CitiesView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context)
+                  .cities
+                  .where((city) => city.region == 'South of upper Egypt')
+                  .toList(),
+            ),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(

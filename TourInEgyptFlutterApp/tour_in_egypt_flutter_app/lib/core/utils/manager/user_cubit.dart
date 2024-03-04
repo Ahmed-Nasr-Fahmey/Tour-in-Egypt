@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/post_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/user_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
@@ -11,7 +12,7 @@ class UserCubit extends Cubit<UserState> {
   UserModel userModel = UserModel();
   List<UserModel> stories = [];
   List<PostModel> posts = [];
-
+  List<CityModel> cities = [];
   // get Stories
 
   Future<void> getAllUsers() async {
@@ -57,6 +58,29 @@ class UserCubit extends Cubit<UserState> {
       }
     } on Exception {
       emit(PostsFailureState(erorrMessage: 'There was an error, try again.'));
+    }
+  }
+
+  Future<void> getCities() async {
+    emit(CitiesLoadingState());
+    try {
+      Map<String, dynamic> data = await ApiService.getCities(
+        token: userModel.token!,
+      );
+      if (data['message'] == 'Cities retrieved successfully') {
+        List<CityModel> tempCities = [];
+        for (var city in data['cities']) {
+          print('City ======> $city');
+          tempCities.add(CityModel.fromJson(city));
+        }
+        cities = tempCities;
+        emit(CitiesSuccessState());
+      } else if (data['message'] == 'Internal Server Error') {
+        emit(CitiesFailureState(
+            erorrMessage: 'Internal Server Error, try later.'));
+      }
+    } on Exception {
+      emit(CitiesFailureState(erorrMessage: 'There was an error, try again.'));
     }
   }
 }

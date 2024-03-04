@@ -26,3 +26,14 @@ class PostsFailureState extends UserState {
   final String erorrMessage;
   PostsFailureState({required this.erorrMessage});
 }
+
+// Cities
+
+class CitiesLoadingState extends UserState {}
+
+class CitiesSuccessState extends UserState {}
+
+class CitiesFailureState extends UserState {
+  final String erorrMessage;
+  CitiesFailureState({required this.erorrMessage});
+}

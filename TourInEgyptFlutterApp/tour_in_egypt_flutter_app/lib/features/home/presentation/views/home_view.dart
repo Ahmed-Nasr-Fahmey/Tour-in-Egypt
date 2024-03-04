@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_see_all_row.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/cities_view.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/settings_view.dart';
@@ -86,8 +88,10 @@ class HomeView extends StatelessWidget {
               },
             ),
           ),
-          const SliverToBoxAdapter(
-            child: HomeScreenCityCardBuilder(),
+          SliverToBoxAdapter(
+            child: HomeScreenCityCardBuilder(
+              cities: BlocProvider.of<UserCubit>(context).cities,
+            ),
           ),
           const PostCardBuilder(),
           const SliverToBoxAdapter(

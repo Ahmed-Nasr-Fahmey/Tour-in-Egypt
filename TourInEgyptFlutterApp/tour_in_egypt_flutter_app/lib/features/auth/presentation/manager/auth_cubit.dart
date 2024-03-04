@@ -32,6 +32,12 @@ class AuthCubit extends Cubit<AuthState> {
         BlocProvider.of<UserCubit>(context).userModel.token = data['token'];
         await BlocProvider.of<UserCubit>(context).getAllUsers();
         await BlocProvider.of<UserCubit>(context).getAllPosts();
+        await BlocProvider.of<UserCubit>(context).getCities();
+        print('=========================');
+        print(BlocProvider.of<UserCubit>(context).stories);
+        print(BlocProvider.of<UserCubit>(context).posts);
+        print(BlocProvider.of<UserCubit>(context).cities);
+        print('=========================');
         emit(LoginSuccessState());
       } else if (data['message'] == 'Email not found') {
         emit(LoginFaliureState(erorrMessage: 'Email not found.'));
