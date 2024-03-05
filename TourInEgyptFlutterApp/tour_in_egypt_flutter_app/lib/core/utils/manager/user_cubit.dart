@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/post_model.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_category_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/user_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
 part 'user_state.dart';
@@ -13,6 +14,8 @@ class UserCubit extends Cubit<UserState> {
   List<UserModel> stories = [];
   List<PostModel> posts = [];
   List<CityModel> cities = [];
+  List<CityCategoryModel> restaurants = [];
+
   // get Stories
 
   Future<void> getAllUsers() async {
@@ -62,6 +65,7 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  // Cities
   Future<void> getCities() async {
     emit(CitiesLoadingState());
     try {
@@ -81,6 +85,30 @@ class UserCubit extends Cubit<UserState> {
       }
     } on Exception {
       emit(CitiesFailureState(erorrMessage: 'There was an error, try again.'));
+    }
+  }
+
+  // Restaurants
+  Future<void> getRestaurants() async {
+    emit(RestaurantsLoadingState());
+    try {
+      Map<String, dynamic> data = await ApiService.getRestaurants(
+        token: userModel.token!,
+      );
+      if (data['message'] == 'Restaurants retrieved successfully') {
+        List<CityCategoryModel> tempRestaurants = [];
+        for (var restaurant in data['restaurants']) {
+          tempRestaurants.add(CityCategoryModel.fromJson(restaurant));
+        }
+        restaurants = tempRestaurants;
+        emit(RestaurantsSuccessState());
+      } else if (data['message'] == 'Internal Server Error') {
+        emit(RestaurantsFailureState(
+            erorrMessage: 'Internal Server Error, try later.'));
+      }
+    } on Exception {
+      emit(RestaurantsFailureState(
+          erorrMessage: 'There was an error, try again.'));
     }
   }
 }

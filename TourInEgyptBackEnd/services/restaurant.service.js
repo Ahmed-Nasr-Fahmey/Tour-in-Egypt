@@ -13,3 +13,13 @@ module.exports.addRestaurants = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+
+module.exports.getRestaurants = async (req, res) => {
+    try {
+      const restaurants = await restaurantModel.find({}).populate('cityId', 'cityName');
+      res.status(200).json({ message: 'Restaurants retrieved successfully', restaurants });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+}

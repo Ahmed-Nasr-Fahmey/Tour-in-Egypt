@@ -33,7 +33,9 @@ class CategoriesCardBuilder extends StatelessWidget {
                   context,
                   settings: const RouteSettings(
                       name: DiscoverGovernorateView.routeName),
-                  screen: const DiscoverGovernorateView(),
+                  screen: DiscoverGovernorateView(
+                    title: ConstLists.categoriesList[index].categoryName,
+                  ),
                   withNavBar: false,
                   pageTransitionAnimation: PageTransitionAnimation.cupertino,
                 );

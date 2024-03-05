@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_category_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/display_filter_provider.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/governorate_category_card.dart';
@@ -14,9 +15,6 @@ class LikedCategoryView extends StatefulWidget {
 class _LikedCategoryViewState extends State<LikedCategoryView> {
   @override
   Widget build(BuildContext context) {
-    DisplayCategoryProvider display =
-        Provider.of<DisplayCategoryProvider>(context);
-
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(60),
@@ -37,12 +35,12 @@ class _LikedCategoryViewState extends State<LikedCategoryView> {
               child: ListView.separated(
                   itemBuilder: (context, index) {
                     return GovernorateCategoryCard(
-                        index: index, categoryModel: display.likedList);
+                        index: index, categoryModel: CityCategoryModel());
                   },
                   separatorBuilder: (context, _) => const SizedBox(
                         height: 20,
                       ),
-                  itemCount: display.likedList.length),
+                  itemCount: 1),
             ),
           ],
         ),

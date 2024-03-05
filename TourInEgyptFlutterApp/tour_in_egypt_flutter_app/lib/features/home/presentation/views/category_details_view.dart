@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_category_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/functions/validation.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_button.dart';
@@ -11,19 +12,19 @@ import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/sta
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/category_header.dart';
 
 class CategoryDetailsView extends StatelessWidget {
-  const CategoryDetailsView({super.key});
+  const CategoryDetailsView({super.key, required this.categoryModel});
 
   static const String routeName = "categoryDetailsView";
-
+  final CityCategoryModel categoryModel;
   @override
   Widget build(BuildContext context) {
     DisplayCategoryProvider display =
         Provider.of<DisplayCategoryProvider>(context);
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60),
+      appBar:  PreferredSize(
+        preferredSize: const Size.fromHeight(60),
         child: CustomMainAppBar(
-          title: "Restaurant",
+          title: categoryModel.name,
           hasBackgroundColor: true,
           hasBackIcon: true,
         ),
@@ -33,7 +34,7 @@ class CategoryDetailsView extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                CategoryHeader(categoryModel: display.displayCategory[0]),
+                CategoryHeader(categoryModel: categoryModel),
                 const Padding(
                   padding: EdgeInsets.only(left: 15, top: 25),
                   child: Text(

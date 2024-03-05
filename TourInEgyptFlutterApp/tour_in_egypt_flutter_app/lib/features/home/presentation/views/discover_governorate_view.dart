@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_tab_bar.dart';
 import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/display_filter_provider.dart';
@@ -8,10 +10,10 @@ import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/sta
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/governorate_category_card_builder.dart';
 
 class DiscoverGovernorateView extends StatefulWidget {
-  const DiscoverGovernorateView({super.key});
+  const DiscoverGovernorateView({super.key, required this.title});
 
   static const String routeName = "DiscoverGovernorateView";
-
+  final String title;
   @override
   State<DiscoverGovernorateView> createState() =>
       _DiscoverGovernorateViewState();
@@ -19,6 +21,11 @@ class DiscoverGovernorateView extends StatefulWidget {
 
 class _DiscoverGovernorateViewState extends State<DiscoverGovernorateView> {
   int selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<UserCubit>(context).getRestaurants();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class _DiscoverGovernorateViewState extends State<DiscoverGovernorateView> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: CustomMainAppBar(
-          title: "Restaurants",
+          title: widget.title,
           hasBackgroundColor: true,
           hasBackIcon: true,
           actions: [
@@ -62,7 +69,9 @@ class _DiscoverGovernorateViewState extends State<DiscoverGovernorateView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: GovernorateCategoryCardBuilder(display: display),
+              child: GovernorateCategoryCardBuilder(
+                restaurants: BlocProvider.of<UserCubit>(context).restaurants,
+              ),
             ),
           ),
         ],
