@@ -5,12 +5,14 @@ class CityModel {
   String? famousPlaceName;
   String? famousPlacePath;
   String? temperature;
+  String? weather;
   CityModel({
     this.cityID,
     this.cityName,
     this.region,
     this.famousPlaceName,
     this.famousPlacePath,
+    this.weather,
   });
 
   // Factory constructor

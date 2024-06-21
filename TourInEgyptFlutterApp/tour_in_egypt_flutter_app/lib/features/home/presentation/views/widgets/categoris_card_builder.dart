@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/discover_governorate_view.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/catigory_card.dart';
 
 class CategoriesCardBuilder extends StatelessWidget {
   const CategoriesCardBuilder({
-    super.key,
+    super.key, required this.cityModel,
   });
-
+  final CityModel cityModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,6 +36,7 @@ class CategoriesCardBuilder extends StatelessWidget {
                       name: DiscoverGovernorateView.routeName),
                   screen: DiscoverGovernorateView(
                     title: ConstLists.categoriesList[index].categoryName,
+                    cityModel: cityModel,
                   ),
                   withNavBar: false,
                   pageTransitionAnimation: PageTransitionAnimation.cupertino,

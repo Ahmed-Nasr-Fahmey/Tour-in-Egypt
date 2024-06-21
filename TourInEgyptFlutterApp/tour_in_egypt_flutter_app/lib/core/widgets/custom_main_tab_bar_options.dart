@@ -16,21 +16,26 @@ class _CustomMainTabBarOptionsState extends State<CustomMainTabBarOptions> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35,
+      height: 34,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: widget.index != -1 ? ConstColors.primaryBlueColor : Colors.white,
         border: Border.all(width: 2, color: ConstColors.primaryBlueColor),
       ),
-      child: Center(
-        child: Text(
-          "        ${widget.name}        ",
-          style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: widget.index != -1
-                  ? Colors.white
-                  : ConstColors.primaryBlueColor),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: 100,
+        ),
+        child: Center(
+          child: Text(
+            widget.name,
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: widget.index != -1
+                    ? Colors.white
+                    : ConstColors.primaryBlueColor),
+          ),
         ),
       ),
     );

@@ -93,7 +93,7 @@ class HomeView extends StatelessWidget {
               cities: BlocProvider.of<UserCubit>(context).cities,
             ),
           ),
-          const PostCardBuilder(),
+           PostCardBuilder(posts: BlocProvider.of<UserCubit>(context).posts),
           const SliverToBoxAdapter(
             child: SizedBox(
               height: 65,

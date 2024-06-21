@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
+const bodyParser = require('body-parser');
 const port = process.env.PORT;
 const mongoose = require('mongoose');
 
-
+// Increase the payload size limit
+app.use(bodyParser.json({ limit: '50mb' })); // Adjust the limit as needed
 app.use(express.json());
 app.use(express.static('uploads'));
 
@@ -31,7 +33,6 @@ app.use('/shopping',require('./apis/shopping.api'));
 app.use('/parks',require('./apis/park.api'));
 app.use('/events',require('./apis/event.api'));
 app.use('/emergency',require('./apis/emergency.api'));
-
 
 // Start the server
 let server = app.listen(port, () => {

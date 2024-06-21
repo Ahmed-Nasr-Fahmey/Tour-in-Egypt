@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +22,7 @@ class HomeScreenReelCard extends StatelessWidget {
         PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
           context,
           settings: const RouteSettings(name: ImageView.routeName),
-          screen: ImageView(imageUrl: userModel.picture!),
+          screen: ImageView(imageUrl: userModel.picture!, isFromServer: true,),
           withNavBar: false,
           pageTransitionAnimation: PageTransitionAnimation.fade,
         );
@@ -36,8 +37,9 @@ class HomeScreenReelCard extends StatelessWidget {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: ConstColors.primaryGoldColor),
+                    borderRadius: BorderRadius.circular(50),
+                    color: ConstColors.primaryGoldColor,
+                  ),
                 ),
                 Positioned(
                   top: 3,
@@ -51,7 +53,8 @@ class HomeScreenReelCard extends StatelessWidget {
                       // backgroundImage: NetworkImage(
                       //     'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg'),
                       child: CachedNetworkImage(
-                        imageUrl: ApiService.imagesBaseUrl + userModel.picture!,
+                        imageUrl: ApiService.imagesBaseUrl +
+                            (userModel.picture ?? ''),
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(

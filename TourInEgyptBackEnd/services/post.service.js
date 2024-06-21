@@ -3,70 +3,45 @@ const { postModel } = require("../models/post.model");
 module.exports.createPost = async (request, response) => {
     try {
         const userId = request._id;
+        console.log(request.body)
         const {
             contentType,
             placeName,
             description,
             hashtags,
             location,
-            longtude,
+            longitude,
             latitude,
-            likes,
-            comments,
-            contentPath,
         } = request.body;
-
-        // const newPost = new postModel({
-        //     contentPath,
-        //     contentType,
-        //     placeName,
-        //     description,
-        //     hashtags,
-        //     location,
-        //     longtude,
-        //     latitude,
-        //     userId,
-        //     likes,
-        //     comments,
-        // });
-
-        // Save the new post to the database
-        // await newPost.save();
 
         const fileDetails = request.file;
         if (fileDetails) {
             // Create a new post instance
             const newPost = new postModel({
+                userId,
                 contentPath: fileDetails.filename,
                 contentType,
                 placeName,
                 description,
                 hashtags,
                 location,
-                longtude,
+                longitude,
                 latitude,
-                userId,
-                likes,
-                comments,
             });
-
             // Save the new post to the database
             await newPost.save();
         }else{
             // Create a new post instance
             const newPost = new postModel({
+                userId,
                 contentType,
                 placeName,
                 description,
                 hashtags,
                 location,
-                longtude,
+                longitude,
                 latitude,
-                userId,
-                likes,
-                comments,
             });
-
             // Save the new post to the database
             await newPost.save();
         }

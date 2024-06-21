@@ -12,8 +12,9 @@ class CustomProfileTextFormField extends StatefulWidget {
     required this.isPassword,
     this.onChanged,
     this.controller,
+    this.maxLines,
   });
-
+int? maxLines;
   final String? hintText;
   Widget? suffixIcon;
   String? Function(String?)? validator;
@@ -32,6 +33,7 @@ class _CustomProfileTextFormFieldState
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: widget.maxLines,
       style: const TextStyle(
         color: ConstColors.profileTextColor,
         fontSize: 12,

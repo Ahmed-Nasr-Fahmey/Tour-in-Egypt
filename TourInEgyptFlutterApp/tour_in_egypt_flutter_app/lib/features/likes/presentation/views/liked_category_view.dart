@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/catigory_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/city_category_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
-import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/display_filter_provider.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/governorate_category_card.dart';
 
 class LikedCategoryView extends StatefulWidget {
-  const LikedCategoryView({super.key});
+  const LikedCategoryView(
+      {super.key,
+      required this.categoryModel,
+      required this.cityCategoryModel});
   static const String routeName = 'LikedCategoryView';
+  final CategoryModel categoryModel;
+  final List<CityCategoryModel> cityCategoryModel;
   @override
   State<LikedCategoryView> createState() => _LikedCategoryViewState();
 }
@@ -16,10 +20,10 @@ class _LikedCategoryViewState extends State<LikedCategoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
         child: CustomMainAppBar(
-          title: 'Liked Restaurants',
+          title: 'Liked ${widget.categoryModel.categoryName}',
           hasBackgroundColor: true,
           hasBackIcon: true,
         ),
@@ -33,14 +37,15 @@ class _LikedCategoryViewState extends State<LikedCategoryView> {
             ),
             Expanded(
               child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return GovernorateCategoryCard(
-                        index: index, categoryModel: CityCategoryModel());
-                  },
-                  separatorBuilder: (context, _) => const SizedBox(
-                        height: 20,
-                      ),
-                  itemCount: 1),
+                itemBuilder: (context, index) {
+                  return GovernorateCategoryCard(
+                      categoryModel: widget.cityCategoryModel[index]);
+                },
+                separatorBuilder: (context, _) => const SizedBox(
+                  height: 20,
+                ),
+                itemCount: widget.cityCategoryModel.length,
+              ),
             ),
           ],
         ),

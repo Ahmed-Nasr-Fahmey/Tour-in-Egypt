@@ -9,7 +9,7 @@ const shoppingSchema = mongoose.Schema({
     description: String,
     location: String,
     address:String,
-    longtude: String,
+    longitude: String,
     latitude: String,
     picture:String,
     rate: {

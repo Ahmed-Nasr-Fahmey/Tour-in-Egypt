@@ -5,9 +5,11 @@ import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/dis
 import 'custom_main_tab_bar_options.dart';
 
 class CustomMainTabBar extends StatefulWidget {
-  const CustomMainTabBar({super.key, required this.governorateModel});
+  const CustomMainTabBar({Key? key, required this.governorateModel})
+      : super(key: key);
 
   final GovernorateModel governorateModel;
+
   @override
   State<CustomMainTabBar> createState() => _CustomMainTabBarState();
 }
@@ -20,37 +22,44 @@ class _CustomMainTabBarState extends State<CustomMainTabBar> {
     DisplayCategoryProvider display =
         Provider.of<DisplayCategoryProvider>(context);
 
-    return DefaultTabController(
-      initialIndex: selectedIndex,
-      length: widget.governorateModel.categoryOptions.length,
-      child: TabBar(
-        onTap: (index) {
-          setState(
-            () {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width,
+      ),
+      child: DefaultTabController(
+        initialIndex: selectedIndex,
+        length: widget.governorateModel.categoryOptions.length,
+        child: TabBar(
+          onTap: (index) {
+            setState(() {
               selectedIndex = index;
               if (selectedIndex == 0) {
                 display.getAll(widget.governorateModel.categoryModel);
               } else {
                 display.filterOptionsCategories(
-                    widget.governorateModel.categoryOptions[selectedIndex],
-                    widget.governorateModel.categoryModel);
+                  widget.governorateModel.categoryOptions[selectedIndex],
+                  widget.governorateModel.categoryModel,
+                );
               }
-            },
-          );
-        },
-        indicator: const BoxDecoration(),
-        isScrollable: true,
-        labelPadding: const EdgeInsets.symmetric(horizontal: 10),
-        tabs: widget.governorateModel.categoryOptions.map((e) {
-          return CustomMainTabBarOptions(
-            name: e,
-            index: selectedIndex ==
-                    widget.governorateModel.categoryOptions.indexOf(e)
-                ? selectedIndex
-                : -1,
-          );
-        }).toList(),
+            });
+          },
+          indicator: const BoxDecoration(),
+          isScrollable: false,
+          labelPadding: const EdgeInsets.symmetric(horizontal: 10),
+          tabs: _buildTabs(),
+        ),
       ),
     );
+  }
+
+  List<Widget> _buildTabs() {
+    return widget.governorateModel.categoryOptions.map((option) {
+      final isSelected = selectedIndex ==
+          widget.governorateModel.categoryOptions.indexOf(option);
+      return CustomMainTabBarOptions(
+        name: option,
+        index: isSelected ? selectedIndex : -1,
+      );
+    }).toList();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
 
 class CityCategoryModel {
-  String? restaurantID;
+  String? categoryID;
   CityModel? cityModel;
   String? name;
   String? description;
@@ -10,12 +10,15 @@ class CityCategoryModel {
   String? longitude;
   String? latitude;
   String? picture;
-  int rate = 0;
+  bool isFavorits = false;
+  // ignore: prefer_typing_uninitialized_variables
+  var rate;
   int numberOfRatings = 0;
   bool activeNow = false;
+  String? categoryName;
 
   CityCategoryModel({
-    this.restaurantID,
+    this.categoryID,
     this.cityModel,
     this.name,
     this.description,
@@ -31,8 +34,8 @@ class CityCategoryModel {
 
   factory CityCategoryModel.fromJson(Map<String, dynamic> json) {
     return CityCategoryModel(
-      restaurantID: json['restaurantID'],
-      cityModel: CityModel.fromJson(json['cityModel']),
+      categoryID: json['_id'],
+      cityModel: CityModel.fromJson(json['cityId']),
       name: json['name'],
       description: json['description'],
       location: json['location'],

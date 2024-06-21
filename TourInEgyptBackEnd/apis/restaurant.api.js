@@ -1,5 +1,5 @@
 const { auth } = require('../middleware/authentication/auth');
-const { addRestaurants, getRestaurants } = require('../services/restaurant.service')
+const { addRestaurants, getRestaurants, getRestaurantsByCityId } = require('../services/restaurant.service')
 
 const router = require('express').Router();
 // GET = RETRIVE
@@ -9,5 +9,6 @@ const router = require('express').Router();
 
 router.post('/addRestaurants',  addRestaurants);
 router.get('/getRestaurants', auth, getRestaurants);
+router.get('/getRestaurantsByCityId/:cityId', getRestaurantsByCityId)
 
 module.exports = router;

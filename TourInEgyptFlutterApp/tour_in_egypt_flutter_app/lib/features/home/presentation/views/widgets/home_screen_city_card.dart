@@ -119,7 +119,7 @@ class HomeScreenCityCard extends StatelessWidget {
                           right: 0,
                           bottom: 6,
                           child: Text(
-                            '30°C',
+                            '${double.parse(cityModel.weather??"30").round()}°C',
                             style: GoogleFonts.roboto(
                               color: ConstColors.primaryGoldColor,
                               fontSize: 14,

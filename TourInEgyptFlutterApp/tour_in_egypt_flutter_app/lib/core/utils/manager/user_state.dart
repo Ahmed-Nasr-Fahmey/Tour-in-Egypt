@@ -48,3 +48,14 @@ class RestaurantsFailureState extends UserState {
   final String erorrMessage;
   RestaurantsFailureState({required this.erorrMessage});
 }
+
+// Restaurants
+
+class CafesLoadingState extends UserState {}
+
+class CafesSuccessState extends UserState {}
+
+class CafesFailureState extends UserState {
+  final String erorrMessage;
+  CafesFailureState({required this.erorrMessage});
+}

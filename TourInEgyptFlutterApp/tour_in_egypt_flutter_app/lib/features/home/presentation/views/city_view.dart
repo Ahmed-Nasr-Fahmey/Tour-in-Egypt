@@ -43,8 +43,8 @@ class CityView extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: CategoriesCardBuilder(),
+          SliverToBoxAdapter(
+            child: CategoriesCardBuilder(cityModel: cityModel,),
           ),
           const SliverToBoxAdapter(
             child: CustomSeeAllRow(text: 'Active now in Cairo'),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:tour_in_egypt_flutter_app/core/models/user_model.dart';
 
 class PostModel {
@@ -8,13 +10,13 @@ class PostModel {
   String? description;
   String? hashtags;
   String? location;
-  String? longtude;
+  String? longitude;
   String? latitude;
   int? likes;
   int? comments;
   UserModel? userModel;
   DateTime? createdAt;
-
+  File? postFile;
   PostModel({
     this.postID,
     this.contentPath,
@@ -23,12 +25,13 @@ class PostModel {
     this.description,
     this.hashtags,
     this.location,
-    this.longtude,
+    this.longitude,
     this.latitude,
     this.likes,
     this.comments,
     this.userModel,
     this.createdAt,
+    this.postFile,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
@@ -40,7 +43,7 @@ class PostModel {
       description: json['description'],
       hashtags: json['hashtags'],
       location: json['location'],
-      longtude: json['longtude'],
+      longitude: json['longitude'],
       latitude: json['latitude'],
       likes: json['likes'],
       comments: json['comments'],

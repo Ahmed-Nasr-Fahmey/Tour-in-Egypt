@@ -17,7 +17,10 @@ class CityCard extends StatelessWidget {
         PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
           context,
           settings: const RouteSettings(name: ImageView.routeName),
-          screen: ImageView(imageUrl: cityModel.famousPlacePath!),
+          screen: ImageView(
+            imageUrl: cityModel.famousPlacePath!,
+            isFromServer: true,
+          ),
           withNavBar: false,
           pageTransitionAnimation: PageTransitionAnimation.fade,
         );
@@ -119,7 +122,7 @@ class CityCard extends StatelessWidget {
                 right: 16,
                 bottom: 30,
                 child: Text(
-                  '30°C',
+                  '${double.parse(cityModel.weather ?? "30").round()}°C',
                   style: GoogleFonts.roboto(
                     color: ConstColors.primaryGoldColor,
                     fontSize: 18,

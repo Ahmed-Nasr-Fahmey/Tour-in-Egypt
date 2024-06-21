@@ -3,6 +3,12 @@ import 'package:tour_in_egypt_flutter_app/features/profile/presentation/views/wi
 
 class ProfileScreenReelsCardBuilder extends StatelessWidget {
   const ProfileScreenReelsCardBuilder({super.key});
+  static List<String> reels = [
+    'reel 1.png',
+    'reel 2.png',
+    'reel 3.png',
+    'reel 4.png',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -10,15 +16,15 @@ class ProfileScreenReelsCardBuilder extends StatelessWidget {
       height: 250,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: 10,
+        itemCount: reels.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const Padding(
-            padding: EdgeInsets.only(
+          return Padding(
+            padding: const EdgeInsets.only(
               bottom: 16,
               left: 16,
             ),
-            child: ProfileScreenReelCard(),
+            child: ProfileScreenReelCard(imageUrl: reels[index]),
           );
         },
       ),

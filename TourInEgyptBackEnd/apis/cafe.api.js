@@ -1,4 +1,5 @@
-const {  } = require('../services/cafe.service')
+const { auth } = require('../middleware/authentication/auth');
+const { addCafes, getCafes, getCafesByCityId } = require('../services/cafe.service')
 
 const router = require('express').Router();
 // GET = RETRIVE
@@ -6,8 +7,9 @@ const router = require('express').Router();
 // PUT = UPDATE
 // DELETE = REMOVE
 
-// router.post('/signUp', signUp);
+router.post('/addCafes', addCafes);
+router.get('/getCafes', auth, getCafes);
+router.get('/getCafesByCityId/:cityId', getCafesByCityId)
 
-// router.get('/getUsers', auth, getUsers);
 
 module.exports = router;

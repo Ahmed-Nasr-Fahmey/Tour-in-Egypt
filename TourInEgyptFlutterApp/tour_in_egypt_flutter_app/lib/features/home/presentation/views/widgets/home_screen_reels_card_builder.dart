@@ -12,7 +12,7 @@ class HomeScreenReelsCardBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 110,
+      height: MediaQuery.of(context).size.height * 0.12,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: BlocProvider.of<UserCubit>(context).stories.length,
@@ -20,8 +20,8 @@ class HomeScreenReelsCardBuilder extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(
-              top: 16,
-              bottom: 16,
+              top: 8,
+              bottom: 8,
               left: 16,
             ),
             child: index != 0

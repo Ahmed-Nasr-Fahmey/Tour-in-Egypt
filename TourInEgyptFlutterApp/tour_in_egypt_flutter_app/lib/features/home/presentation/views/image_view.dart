@@ -9,10 +9,12 @@ class ImageView extends StatelessWidget {
   const ImageView({
     Key? key,
     required this.imageUrl,
+    required this.isFromServer,
   }) : super(key: key);
 
   static const String routeName = 'ImageView';
   final String imageUrl;
+  final bool isFromServer;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class ImageView extends StatelessWidget {
         builder: (context, index) {
           return PhotoViewGalleryPageOptions(
             imageProvider: CachedNetworkImageProvider(
-              ApiService.imagesBaseUrl + imageUrl,
+              isFromServer ? ApiService.imagesBaseUrl + imageUrl : imageUrl,
             ),
             minScale: PhotoViewComputedScale.contained,
             maxScale: PhotoViewComputedScale.covered * 2,

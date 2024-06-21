@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
 import 'package:tour_in_egypt_flutter_app/core/models/post_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/comments_view.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/image_view.dart';
+import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/map_view.dart';
 
 class PostCard extends StatefulWidget {
   const PostCard({
@@ -53,7 +55,9 @@ class _PostCardState extends State<PostCard> {
                         settings:
                             const RouteSettings(name: ImageView.routeName),
                         screen: ImageView(
-                            imageUrl: widget.postModel.userModel!.picture!),
+                          imageUrl: widget.postModel.userModel!.picture!,
+                          isFromServer: true,
+                        ),
                         withNavBar: false,
                         pageTransitionAnimation: PageTransitionAnimation.fade,
                       );
@@ -159,8 +163,10 @@ class _PostCardState extends State<PostCard> {
                         context,
                         settings:
                             const RouteSettings(name: ImageView.routeName),
-                        screen:
-                            ImageView(imageUrl: widget.postModel.contentPath!),
+                        screen: ImageView(
+                          imageUrl: widget.postModel.contentPath!,
+                          isFromServer: true,
+                        ),
                         withNavBar: false,
                         pageTransitionAnimation: PageTransitionAnimation.fade,
                       );
@@ -258,6 +264,20 @@ class _PostCardState extends State<PostCard> {
                   GestureDetector(
                     onTap: () {
                       //show popup menu that have location detailes
+                      PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+                        context,
+                        settings:
+                            const RouteSettings(name: ShowMapView.routeName),
+                        screen: ShowMapView(
+                          latLng: LatLng(
+                            double.parse(widget.postModel.latitude!),
+                            double.parse(widget.postModel.longitude!),
+                          ),
+                        ),
+                        withNavBar: false,
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.cupertino,
+                      );
                     },
                     child: Column(
                       children: [

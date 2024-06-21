@@ -7,7 +7,7 @@ const postSchema = mongoose.Schema({
     description: String,
     hashtags: String,
     location: String,
-    longtude: String,
+    longitude: String,
     latitude: String,
     userId: {
         type: mongoose.Schema.Types.ObjectId,

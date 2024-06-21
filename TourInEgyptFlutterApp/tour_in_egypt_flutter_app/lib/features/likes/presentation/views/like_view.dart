@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/features/likes/presentation/views/widgets/likes_categoris_card_builder.dart';
+
 class LikesView extends StatefulWidget {
   const LikesView({super.key});
 
@@ -35,8 +36,8 @@ class _LikesViewState extends State<LikesView> {
                 'Find your likes here !',
                 style: GoogleFonts.roboto(
                   color: ConstColors.primaryBlueColor,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),

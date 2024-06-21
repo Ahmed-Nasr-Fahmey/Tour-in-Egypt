@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/utils/api_service.dart';
 
 class ProfileScreenReelCard extends StatelessWidget {
   const ProfileScreenReelCard({
-    super.key,
+    super.key, required this.imageUrl,
   });
-
+  final String imageUrl;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -29,7 +30,7 @@ class ProfileScreenReelCard extends StatelessWidget {
               // ),
               child: CachedNetworkImage(
                 imageUrl:
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/%D9%82%D9%84%D8%B9%D9%87_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_23.jpg/1200px-%D9%82%D9%84%D8%B9%D9%87_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_23.jpg',
+                    ApiService.baseUrl + imageUrl,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(

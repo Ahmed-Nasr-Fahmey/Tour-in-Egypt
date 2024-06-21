@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:tour_in_egypt_flutter_app/constants.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_category_model.dart';
+import 'package:tour_in_egypt_flutter_app/core/models/city_model.dart';
 import 'package:tour_in_egypt_flutter_app/core/utils/manager/user_cubit.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_app_bar.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_tab_bar.dart';
-import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/display_filter_provider.dart';
 import 'package:tour_in_egypt_flutter_app/features/auth/presentation/manager/static_category_data.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/governorate_category_card_builder.dart';
 
 class DiscoverGovernorateView extends StatefulWidget {
-  const DiscoverGovernorateView({super.key, required this.title});
+  const DiscoverGovernorateView({
+    Key? key,
+    required this.title,
+    required this.cityModel,
+  }) : super(key: key);
 
   static const String routeName = "DiscoverGovernorateView";
   final String title;
+  final CityModel cityModel;
+
   @override
-  State<DiscoverGovernorateView> createState() =>
+  _DiscoverGovernorateViewState createState() =>
       _DiscoverGovernorateViewState();
 }
 
 class _DiscoverGovernorateViewState extends State<DiscoverGovernorateView> {
   int selectedIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<UserCubit>(context).getRestaurants();
-  }
 
   @override
   Widget build(BuildContext context) {
-    DisplayCategoryProvider display =
-        Provider.of<DisplayCategoryProvider>(context);
     return Scaffold(
       backgroundColor: ConstColors.backgroundLightMode,
       appBar: PreferredSize(
@@ -61,21 +60,37 @@ class _DiscoverGovernorateViewState extends State<DiscoverGovernorateView> {
       ),
       body: Column(
         children: [
-          const SizedBox(
-            height: 16,
-          ),
+          const SizedBox(height: 16),
           CustomMainTabBar(
               governorateModel: StaticCategoryData.governorateModel),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: GovernorateCategoryCardBuilder(
-                restaurants: BlocProvider.of<UserCubit>(context).restaurants,
+                categoryModel: _getCategoryModel(context),
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  List<CityCategoryModel> _getCategoryModel(BuildContext context) {
+    if (widget.title == 'Restaurants') {
+      return BlocProvider.of<UserCubit>(context)
+          .restaurants
+          .where(
+              (element) => element.cityModel?.cityID == widget.cityModel.cityID)
+          .toList();
+    } else if (widget.title == 'Cafes') {
+      return BlocProvider.of<UserCubit>(context)
+          .cafes
+          .where(
+              (element) => element.cityModel?.cityID == widget.cityModel.cityID)
+          .toList();
+    } else {
+      return [];
+    }
   }
 }

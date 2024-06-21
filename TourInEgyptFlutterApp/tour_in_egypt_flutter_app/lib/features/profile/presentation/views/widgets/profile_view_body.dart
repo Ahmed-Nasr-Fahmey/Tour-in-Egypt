@@ -10,6 +10,7 @@ import 'package:tour_in_egypt_flutter_app/core/widgets/custom_main_button.dart';
 import 'package:tour_in_egypt_flutter_app/core/widgets/custom_see_all_row.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/image_view.dart';
 import 'package:tour_in_egypt_flutter_app/features/home/presentation/views/widgets/post_card_builder.dart';
+import 'package:tour_in_egypt_flutter_app/features/profile/presentation/views/add_post_view.dart';
 import 'package:tour_in_egypt_flutter_app/features/profile/presentation/views/widgets/profile_screen_reels_card_builder.dart';
 
 class ProfileViewBody extends StatelessWidget {
@@ -40,6 +41,7 @@ class ProfileViewBody extends StatelessWidget {
                             imageUrl: BlocProvider.of<UserCubit>(context)
                                 .userModel
                                 .picture!,
+                                isFromServer: true,
                           ),
                           withNavBar: false,
                           pageTransitionAnimation: PageTransitionAnimation.fade,
@@ -196,6 +198,42 @@ class ProfileViewBody extends StatelessWidget {
             child: Stack(
               children: [
                 CustomMainButton(
+                  text: 'Add Post',
+                  onTap: () {
+                    PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+                      context,
+                      settings: const RouteSettings(name: AddPostView.routName),
+                      screen: const AddPostView(),
+                      withNavBar: false,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
+                  },
+                ),
+                const Positioned(
+                  right: 14,
+                  top: 10,
+                  child: Icon(
+                    Icons.add,
+                    size: 22,
+                    color: ConstColors.primaryGoldColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 20,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Stack(
+              children: [
+                CustomMainButton(
                   text: 'Add Place',
                   onTap: () {},
                 ),
@@ -253,7 +291,14 @@ class ProfileViewBody extends StatelessWidget {
             ),
           ),
         ),
-        const PostCardBuilder(),
+        PostCardBuilder(
+          posts: BlocProvider.of<UserCubit>(context)
+              .posts
+              .where((element) =>
+                  element.userModel!.userID ==
+                  BlocProvider.of<UserCubit>(context).userModel.userID)
+              .toList(),
+        ),
         const SliverToBoxAdapter(
           child: SizedBox(
             height: 65,

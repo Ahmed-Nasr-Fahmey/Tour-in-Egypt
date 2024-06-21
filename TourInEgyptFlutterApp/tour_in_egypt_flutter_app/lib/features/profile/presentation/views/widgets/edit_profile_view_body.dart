@@ -57,6 +57,7 @@ class EditProfileViewBody extends StatelessWidget {
                             imageUrl: BlocProvider.of<UserCubit>(context)
                                 .userModel
                                 .picture!,
+                            isFromServer: true,
                           ),
                           withNavBar: false,
                           pageTransitionAnimation: PageTransitionAnimation.fade,
@@ -249,7 +250,11 @@ class EditProfileViewBody extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: CustomMainButton(text: "Save Changes", onTap: () {}),
+                child: CustomMainButton(
+                    text: "Save Changes",
+                    onTap: () {
+                      Navigator.pop(context);
+                    }),
               )
             ],
           ),

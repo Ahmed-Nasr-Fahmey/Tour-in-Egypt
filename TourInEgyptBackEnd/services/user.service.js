@@ -57,14 +57,11 @@ module.exports.sendConfirmationCode = async (request, response) => {
     try {
         const { email } = request.body;
         const user = await userModel.findOne({email});
-
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
-
         // Generate a confirmation code
         const confirmationCode = Math.random().toString().slice(2, 6);
-
         // Save the confirmation code in the user document (you may want to store it securely)
         user.confirmationCode = confirmationCode;
         await user.save();
@@ -81,7 +78,6 @@ module.exports.sendConfirmationCode = async (request, response) => {
                 rejectUnauthorized: false,
             },
         });
-
         const mailOptions = {
             from: SYSTEMAUTHEMAIL,
             to: user.email,
@@ -89,7 +85,6 @@ module.exports.sendConfirmationCode = async (request, response) => {
             // text: `Your confirmation code is: ${confirmationCode}`,
             html:`Your confirmation code is: ${confirmationCode}`
         };
-    
         try {
             await transporter.sendMail(mailOptions);
             response.json({ message: "Confirmation code sent successfully" });
@@ -106,13 +101,10 @@ module.exports.sendConfirmationCode = async (request, response) => {
 module.exports.verifyConfirmationCode = async (request, response) => {
     try {
         const { email, confirmationCode } = request.body;
-
         const user = await userModel.findOne({ email });
-
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
-
         if (user.confirmationCode === confirmationCode) {
             // Clear the confirmation code after successful verification
             user.confirmationCode = undefined;
@@ -130,17 +122,13 @@ module.exports.verifyConfirmationCode = async (request, response) => {
 module.exports.updateUsername = async (request, response) => {
     try {
         const { newUsername } = request.body;
-
         const user = await userModel.findOne({ _id: request._id });
-
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
-
         // Update the user's username
         user.username = newUsername;
         await user.save();
-
         response.json({ message: "Username updated successfully" });
     } catch (error) {
         console.error(error);
@@ -151,23 +139,18 @@ module.exports.updateUsername = async (request, response) => {
 module.exports.updateEmail = async (request, response) => {
     try {
         const { newEmail } = request.body;
-
         const user = await userModel.findOne({ _id: request._id });
-
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
-
         // Check if the new email is already in use by another user
         const existingUserWithNewEmail = await userModel.findOne({ email: newEmail });
         if (existingUserWithNewEmail) {
             return response.status(400).json({ message: "Email already in use" });
         }
-
         // Update the user's email
         user.email = newEmail;
         await user.save();
-
         response.json({ message: "Email updated successfully" });
     } catch (error) {
         console.error(error);
@@ -178,20 +161,15 @@ module.exports.updateEmail = async (request, response) => {
 module.exports.updatePassword = async (request, response) => {
     try {
         const { email, newPassword } = request.body;
-
         const user = await userModel.findOne({ email });
-
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
-
         // Hash the new password
         const hashedPassword = await bcrypt.hash(newPassword, 5);
-
         // Update the user's password
         user.password = hashedPassword;
         await user.save();
-
         response.json({ message: "Password updated successfully" });
     } catch (error) {
         console.error(error);
@@ -202,19 +180,15 @@ module.exports.updatePassword = async (request, response) => {
 module.exports.updatePicture = async (request, response) => {
     try {
         const user = await userModel.findOne({ _id: request._id });
-
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
-
         // Delete existing picture if present
         if (user.picture) {
             await deleteOldPicture(user.picture);
         }
-
         // Update user's picture
         await userModel.updateOne({ _id: request._id }, { $set: { picture: request.file.filename } });
-
         response.json({ message: "Picture updated successfully" });
     } catch (error) {
         console.error(error);
@@ -237,7 +211,6 @@ module.exports.getAllUsers = async (request, response) => {
     try {
         // Find all users in the database, excluding password, admin, and confirmationCode
         const users = await userModel.find({}, { password: 0, admin: 0, confirmationCode: 0 });
-
         response.status(200).json({ message: 'Successfully fetched all users', users });
     } catch (error) {
         console.error(error);
